@@ -21,7 +21,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users."jinx" = import ./home/home.nix;
+              users."jinx" = import ./home/default.nix;
               backupFileExtension = "backup";
             };
           }
