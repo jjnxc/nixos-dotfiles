@@ -1,15 +1,7 @@
-{ pkgs, ... }:
-
 {
-  programs.zsh.enable = true;
+  imports = [
+    ./packages.nix
+  ];
 
   programs.firefox.enable = true;
-
-  environment.systemPackages = with pkgs; [
-    git
-    tree
-    curl
-    wget
-    vim
-  ];
 }
