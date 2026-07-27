@@ -1,0 +1,32 @@
+# Ignore build outputs from performing a nix-build or `nix build` command
+result
+result-*
+
+# Ignore automatically generated direnv output
+.direnv
+
+# Ignore NixOS interactive test driver history
+**/.nixos-test-history
+
+*.qcow2
+
+# Nix build results
+result
+result-*
+
+# Tree-sitter compiled parsers
+*.so
+
+# Neovim cache
+.config/nvim/plugin
+.config/nvim/after/plugin
+
+# Secrets
+*.age
+*.key
+*.pem
+
+# Temporary files
+*.tmp
+*.swp
+*~
