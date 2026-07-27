@@ -5,6 +5,10 @@
     ./programs/git.nix
     ./programs/foot.nix
     ./programs/zsh.nix
+
+    ./desktop/dconf.nix
+    ./desktop/portals.nix
+    ./desktop/dotfiles.nix
   ];
 
   home.username = "jinx";

@@ -1,0 +1,12 @@
+{
+  dconf = {
+    enable = true;
+
+    settings = {
+      "org/gnome/desktop/interface" = {
+        "gtk-theme" = "Adwaita-dark";
+        "color-scheme" = "prefer-dark";
+      };
+    };
+  };
+}
