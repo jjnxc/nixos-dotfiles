@@ -1,34 +1,53 @@
 { pkgs, ... }:
 
 with pkgs; [
+  # --- Wayland / capture / clipboard ---
   rofi
   thunar
   awww
   grim
   slurp
+  wl-clipboard
+  dunst
 
+  # --- Media ---
+  ffmpeg
+  # playerctl
+
+  # --- Core crypto / tooling ---
   openssl
+  # gnupg
+  # pinentry
+
+  # --- Dev runtime / languages ---
   docker
   python3
   unzip
+  # swift
+  # swiftpm
 
-  swift
-  swiftpm
-
-  nerd-fonts.jetbrains-mono
-
+  # --- Editors / apps ---
   neovim
   obsidian
   vscode
+  gimp
 
+  # --- Build toolchain ---
   gcc
   gnumake
 
+  # --- Fonts ---
+  nerd-fonts.jetbrains-mono
+  # nerdfonts
+
+  # --- Themes / icons (cosmetic) ---
   adwaita-icon-theme
   gnome-themes-extra
 
+  # --- Password manager ---
   keepassxc
 
+  # --- CLI productivity ---
   fzf
   starship
   tmux
@@ -37,11 +56,20 @@ with pkgs; [
   eza
   file
 
-  lf
+  # --- File manager / utilities (optional) ---
+  # lf
+  imv
 
-  btop
-  ncdu
+  # --- System monitors (optional) ---
+  # btop
+  # ncdu
 
+  # --- Archives ---
   p7zip
   unrar
+
+  # --- Optional dev UX helpers ---
+  # direnv
+  # nixfmt-rfc-style
+  # zoxide
 ]

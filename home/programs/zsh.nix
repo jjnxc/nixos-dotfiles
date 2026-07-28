@@ -8,7 +8,7 @@
     shellAliases = {
       la = "ls -la";
       edit = "sudo -e";
-      update = "sudo nixos-rebuild switch --flake ~/projects/nixos-repo#nixos-btw";
+      update = "sudo nixos-rebuild switch --flake ~/nixos-dotfiles#desktop-nvidia";
     };
 
     history = {
