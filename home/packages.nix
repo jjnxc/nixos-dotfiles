@@ -1,6 +1,7 @@
 { pkgs, ... }:
 
-with pkgs; [
+with pkgs;
+[
   # --- Wayland / capture / clipboard ---
   rofi
   thunar
@@ -16,6 +17,8 @@ with pkgs; [
 
   # --- Core crypto / tooling ---
   openssl
+  claude-code
+  ollama
   # gnupg
   # pinentry
 
@@ -23,6 +26,8 @@ with pkgs; [
   docker
   python3
   unzip
+  qemu
+  virt-manager
   # swift
   # swiftpm
 
@@ -31,6 +36,9 @@ with pkgs; [
   obsidian
   vscode
   gimp
+  blender
+  # bambu-studio
+  prusa-slicer
 
   # --- Build toolchain ---
   gcc
@@ -61,7 +69,7 @@ with pkgs; [
   imv
 
   # --- System monitors (optional) ---
-  # btop
+  btop
   # ncdu
 
   # --- Archives ---
@@ -70,6 +78,6 @@ with pkgs; [
 
   # --- Optional dev UX helpers ---
   # direnv
-  # nixfmt-rfc-style
+  nixfmt
   # zoxide
 ]

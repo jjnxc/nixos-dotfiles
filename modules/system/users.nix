@@ -11,8 +11,9 @@
       "networkmanager"
       "wheel"
       "docker"
+      "libvirtd"
     ];
 
-    packages = [];
+    packages = [ ];
   };
 }

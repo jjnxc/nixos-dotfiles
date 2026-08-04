@@ -9,6 +9,7 @@
       la = "ls -la";
       edit = "sudo -e";
       update = "sudo nixos-rebuild switch --flake ~/nixos-dotfiles#desktop-nvidia";
+      collect = "sudo nix-collect-garbage -d";
     };
 
     history = {
