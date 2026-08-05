@@ -8,6 +8,7 @@
 - [x] Docker + libvirtd (with swtpm) already enabled, user in both groups —
       containers available now for distro-hopping instead of slow VMs;
       GPU-passthrough VMs available via libvirtd when actually needed
+- [x] direnv + nix-direnv + zsh integration set up via home-manager
 
 ## Still to do
 
@@ -27,7 +28,10 @@
       or independently of them
 
 ### Dev workflow
-- [ ] `direnv` + `nix-direnv` for per-project reproducible dev shells
+- [ ] Try direnv on a real project: add `.envrc` with `use flake` (or plain env
+      vars), run `direnv allow`, confirm auto-load/unload on `cd`
+- [ ] Add `.envrc` to global gitignore so it's not accidentally committed to
+      shared repos
 
 ### Dotfiles / config organization
 - [ ] Consider symlinking `/etc/nixos` -> dotfiles repo (or removing the stale
