@@ -9,6 +9,8 @@
       containers available now for distro-hopping instead of slow VMs;
       GPU-passthrough VMs available via libvirtd when actually needed
 - [x] direnv + nix-direnv + zsh integration set up via home-manager
+- [x] Verified old pre-migration `/home` data on main drive matched the new
+      copy (spot-checked `.ssh`), then removed it — reclaimed ~30G on root
 
 ## Still to do
 
@@ -38,6 +40,10 @@
       dir entirely) so system config and dotfiles are unified
 - [ ] Decide where NixOS flake config itself should live relative to dotfiles
       long-term, so a full reinstall recovers the whole setup, not just data
+
+### Security / personal
+- [ ] Copy KeePass `.kdbx` to phone (KeePassDX / Strongbox / KeePassium) and
+      decide on a sync habit so desktop and phone copies don't diverge
 
 ### Real backups
 - [ ] Btrfs snapshots protect against *mistakes*, not drive failure - set up an
