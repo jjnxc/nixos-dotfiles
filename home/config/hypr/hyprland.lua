@@ -10,7 +10,7 @@ hl.monitor({
 
 ---- MY PROGRAMS ----
 
-local terminal    = "foot"
+local terminal    = "kitty"
 local fileManager = "thunar"
 local menu        = "pkill rofi || rofi -show drun"
 local browser     = "firefox"
@@ -66,7 +66,7 @@ hl.config({
         },
 
         blur = {
-            enabled   = false,
+            enabled   = true,
             size      = 3,
             passes    = 1,
             vibrancy  = 0.1696,
@@ -203,4 +203,11 @@ hl.window_rule({
 
     move  = "20 monitor_h-120",
     float = true,
+})
+
+hl.window_rule({
+    name  = "no-blur-everything-else",
+    match = { class = "negative:kitty" },
+
+    no_blur = true,
 })

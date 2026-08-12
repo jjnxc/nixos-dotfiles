@@ -2,9 +2,12 @@
 {
   imports = [
     ./programs/git.nix
-    ./programs/foot.nix
+    # ./programs/foot.nix
     ./programs/zsh.nix
     ./programs/direnv.nix
+    ./programs/kitty.nix
+    ./programs/starship.nix
+    ./programs/yazi.nix
     ./desktop/dconf.nix
     ./desktop/portals.nix
     ./desktop/dotfiles.nix

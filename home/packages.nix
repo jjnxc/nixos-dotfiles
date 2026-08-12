@@ -37,8 +37,9 @@ with pkgs;
   vscode
   gimp
   blender
+  geeqie
   # bambu-studio
-  prusa-slicer
+  # prusa-slicer
 
   # --- Build toolchain ---
   gcc
@@ -66,7 +67,7 @@ with pkgs;
 
   # --- File manager / utilities (optional) ---
   # lf
-  imv
+  # imv
 
   # --- System monitors (optional) ---
   btop
