@@ -16,8 +16,16 @@
 - [x] Terminal glow-up: kitty (Catppuccin Mocha + Hyprland blur), yazi
       (replaced ranger — faster, native kitty image preview), starship themed
       with Catppuccin palette (kept default format/modules)
+- [x] Automatic weekly nix-gc (14 day retention) + nix-optimise
 
 ## Still to do
+
+### Real backups
+- [ ] Interim: KeePass copied to USB (done/in progress) as a stopgap
+- [ ] Longer-term: set up NAS-based backup for `/home` — snapshots protect
+      against *mistakes*, not drive failure, and the snapshot pipeline itself
+      has already been shown to fail silently once, so this is still the
+      biggest real gap in the setup
 
 ### Cleanup
 - [ ] Old disk swap partition (`/dev/nvme0n1p2`, 16G) is inactive but not removed —
@@ -46,8 +54,6 @@
       shared repos
 
 ### System maintenance
-- [ ] Schedule automatic `nix-collect-garbage` (currently only manual via the
-      `collect` alias) — e.g. `nix.gc.automatic = true` with a retention window
 - [ ] Consider `nh` (Nix Helper) for cleaner/more readable rebuild output
 
 ### Dotfiles / config organization
@@ -55,13 +61,3 @@
       dir entirely) so system config and dotfiles are unified
 - [ ] Decide where NixOS flake config itself should live relative to dotfiles
       long-term, so a full reinstall recovers the whole setup, not just data
-
-### Security / personal
-- [ ] Copy KeePass `.kdbx` to phone (KeePassDX / Strongbox / KeePassium) and
-      decide on a sync habit so desktop and phone copies don't diverge
-
-### Real backups
-- [ ] Btrfs snapshots protect against *mistakes*, not drive failure - set up an
-      actual backup to separate physical media (external drive, cloud, etc.)
-      for anything irreplaceable (e.g. KeePass). This is even more important
-      now that we know the snapshot pipeline itself can fail silently.
