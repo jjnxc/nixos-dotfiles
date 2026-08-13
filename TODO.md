@@ -4,13 +4,18 @@
 - [x] `/home` moved to second NVMe (btrfs, `@home` subvolume, zstd compression)
 - [x] zram swap enabled (50% of RAM, priority over disk swap)
 - [x] Confirmed `/home` data intact and mounted correctly
-- [x] btrfs autoscrub + snapper timeline snapshots for `/home`
+- [x] btrfs autoscrub + snapper timeline snapshots for `/home` — hit a real bug
+      (declarative snapper config doesn't fix `.snapshots` ACLs; timeline
+      silently failed for a week) — fixed via activation script, see RECOVERY.md
 - [x] Docker + libvirtd (with swtpm) already enabled, user in both groups —
       containers available now for distro-hopping instead of slow VMs;
       GPU-passthrough VMs available via libvirtd when actually needed
 - [x] direnv + nix-direnv + zsh integration set up via home-manager
 - [x] Verified old pre-migration `/home` data on main drive matched the new
       copy (spot-checked `.ssh`), then removed it — reclaimed ~30G on root
+- [x] Terminal glow-up: kitty (Catppuccin Mocha + Hyprland blur), yazi
+      (replaced ranger — faster, native kitty image preview), starship themed
+      with Catppuccin palette (kept default format/modules)
 
 ## Still to do
 
@@ -20,6 +25,8 @@
 - [ ] Stale `/etc/nixos/` directory (dated June 20, unrelated to the real flake
       config in `~/nixos-dotfiles`) — clean up to avoid future confusion, e.g.
       if `nixos-rebuild` is ever run without `--flake` by accident
+- [ ] Orphaned `@snapshots` btrfs subvolume (ID 257) on the `/home` drive —
+      leftover from initial setup, never mounted/used, harmless but unused
 - [ ] Double check no other uncommitted changes are lingering
       (`git status` in `nixos-dotfiles`)
 
@@ -28,12 +35,20 @@
       related to the brief black-screen/lockscreen flashes during rebuilds.
       Not confirmed as the cause; worth checking if it recurs on future rebuilds
       or independently of them
+- [ ] Periodically spot-check `snapper -c home list` to confirm timeline
+      snapshots are still accumulating hourly — the ACL bug was silent for a
+      week before being caught, worth a habit of checking occasionally
 
 ### Dev workflow
 - [ ] Try direnv on a real project: add `.envrc` with `use flake` (or plain env
       vars), run `direnv allow`, confirm auto-load/unload on `cd`
 - [ ] Add `.envrc` to global gitignore so it's not accidentally committed to
       shared repos
+
+### System maintenance
+- [ ] Schedule automatic `nix-collect-garbage` (currently only manual via the
+      `collect` alias) — e.g. `nix.gc.automatic = true` with a retention window
+- [ ] Consider `nh` (Nix Helper) for cleaner/more readable rebuild output
 
 ### Dotfiles / config organization
 - [ ] Consider symlinking `/etc/nixos` -> dotfiles repo (or removing the stale
@@ -48,4 +63,5 @@
 ### Real backups
 - [ ] Btrfs snapshots protect against *mistakes*, not drive failure - set up an
       actual backup to separate physical media (external drive, cloud, etc.)
-      for anything irreplaceable (e.g. KeePass)
+      for anything irreplaceable (e.g. KeePass). This is even more important
+      now that we know the snapshot pipeline itself can fail silently.

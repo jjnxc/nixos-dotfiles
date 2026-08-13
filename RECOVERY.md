@@ -157,3 +157,50 @@ If it does happen with no backup:
       `~/nixos-dotfiles`) — this whole recovery plan depends on it
 - [ ] Set up the external/cloud backup for `/home` (Scenario 5 has no other fix)
 - [ ] Keep this file somewhere other than this machine
+
+---
+
+## Known gotcha: snapper timeline silently failing (`.snapshots` ACL)
+
+**Symptom:** `snapper-timeline.timer` shows active and "working" in
+`systemctl status`, but `snapper -c home list` never grows past the initial
+baseline snapshot (`0`). No obvious error unless you go looking.
+
+**Cause:** Configuring `services.snapper.configs.home` declaratively in NixOS
+creates the config file, but does NOT correctly set up permissions on the
+`.snapshots` subvolume that snapper actually writes into. The systemd timer
+runs as root and needs `.snapshots` owned by `root:root` — but your user also
+needs write access to browse/manage snapshots without `sudo`, which normal
+Unix ownership can't do for two different accounts at once. This needs a
+POSIX ACL, not a chown, and the declarative module doesn't set one for you.
+
+**How to check if this is happening to you:**
+```bash
+journalctl -u snapper-timeline.service --no-pager | tail -20
+```
+Look for `IO Error (.snapshots must have owner root)` or
+`IO Error (open failed path:/home/.snapshots errno:2 ...)`.
+
+**The fix** (already applied in this repo's `modules/hardware/snapshots.nix`
+as of the commit "Persist snapper .snapshots ACL fix via activation script"):
+```nix
+system.activationScripts.snapperAcl = ''
+  if [ -d /home/.snapshots ]; then
+    ${pkgs.acl}/bin/setfacl -m u:jinx:rwx /home/.snapshots
+  fi
+'';
+```
+This re-applies the correct ACL on every rebuild/boot, so it's self-healing.
+
+**If setting this up fresh on a new install:** the subvolume needs to exist
+before the ACL can be applied. If `/home/.snapshots` doesn't exist yet:
+```bash
+sudo btrfs subvolume create /home/.snapshots
+sudo chmod 750 /home/.snapshots
+sudo setfacl -m u:jinx:rwx /home/.snapshots
+```
+Then rebuild — the activation script takes over from there on every boot after.
+
+**Lesson:** a systemd timer showing "active" doesn't mean the thing it's
+supposed to do is actually succeeding. Worth an occasional `snapper -c home
+list` spot-check rather than trusting the timer status alone.
