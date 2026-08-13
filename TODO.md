@@ -17,6 +17,8 @@
       (replaced ranger — faster, native kitty image preview), starship themed
       with Catppuccin palette (kept default format/modules)
 - [x] Automatic weekly nix-gc (14 day retention) + nix-optimise
+- [x] Cleanup pass: deleted old disk swap partition (nvme0n1p2), removed stale
+      /etc/nixos, deleted orphaned @snapshots btrfs subvolume
 
 ## Still to do
 
@@ -27,25 +29,13 @@
       has already been shown to fail silently once, so this is still the
       biggest real gap in the setup
 
-### Cleanup
-- [ ] Old disk swap partition (`/dev/nvme0n1p2`, 16G) is inactive but not removed —
-      decide whether to wipe it and reclaim the space, or leave it
-- [ ] Stale `/etc/nixos/` directory (dated June 20, unrelated to the real flake
-      config in `~/nixos-dotfiles`) — clean up to avoid future confusion, e.g.
-      if `nixos-rebuild` is ever run without `--flake` by accident
-- [ ] Orphaned `@snapshots` btrfs subvolume (ID 257) on the `/home` drive —
-      leftover from initial setup, never mounted/used, harmless but unused
-- [ ] Double check no other uncommitted changes are lingering
-      (`git status` in `nixos-dotfiles`)
-
 ### Investigate
 - [ ] `xdg-desktop-portal` coredump seen in `journalctl -b -p err` — possibly
       related to the brief black-screen/lockscreen flashes during rebuilds.
       Not confirmed as the cause; worth checking if it recurs on future rebuilds
       or independently of them
 - [ ] Periodically spot-check `snapper -c home list` to confirm timeline
-      snapshots are still accumulating hourly — the ACL bug was silent for a
-      week before being caught, worth a habit of checking occasionally
+      snapshots are still accumulating hourly
 
 ### Dev workflow
 - [ ] Try direnv on a real project: add `.envrc` with `use flake` (or plain env
@@ -57,7 +47,5 @@
 - [ ] Consider `nh` (Nix Helper) for cleaner/more readable rebuild output
 
 ### Dotfiles / config organization
-- [ ] Consider symlinking `/etc/nixos` -> dotfiles repo (or removing the stale
-      dir entirely) so system config and dotfiles are unified
 - [ ] Decide where NixOS flake config itself should live relative to dotfiles
       long-term, so a full reinstall recovers the whole setup, not just data
