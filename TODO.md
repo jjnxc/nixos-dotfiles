@@ -10,7 +10,8 @@
 - [x] Docker + libvirtd (with swtpm) already enabled, user in both groups —
       containers available now for distro-hopping instead of slow VMs;
       GPU-passthrough VMs available via libvirtd when actually needed
-- [x] direnv + nix-direnv + zsh integration set up via home-manager
+- [x] direnv + nix-direnv + zsh integration set up via home-manager, tested on
+      a real project (hello_c) with a flake-based dev shell
 - [x] Verified old pre-migration `/home` data on main drive matched the new
       copy (spot-checked `.ssh`), then removed it — reclaimed ~30G on root
 - [x] Terminal glow-up: kitty (Catppuccin Mocha + Hyprland blur), yazi
@@ -19,6 +20,11 @@
 - [x] Automatic weekly nix-gc (14 day retention) + nix-optimise
 - [x] Cleanup pass: deleted old disk swap partition (nvme0n1p2), removed stale
       /etc/nixos, deleted orphaned @snapshots btrfs subvolume
+- [x] Set explicit xdg-portal priority (hyprland then gtk) instead of ambiguous
+      default — real improvement, though not confirmed as the root cause of
+      the earlier portal coredump (which hasn't recurred)
+- [x] Added nh (Nix Helper) with NH_FLAKE set — cleaner diffed rebuild output
+      instead of raw nixos-rebuild logs
 
 ## Still to do
 
@@ -29,23 +35,12 @@
       has already been shown to fail silently once, so this is still the
       biggest real gap in the setup
 
-### Investigate
-- [ ] `xdg-desktop-portal` coredump seen in `journalctl -b -p err` — possibly
-      related to the brief black-screen/lockscreen flashes during rebuilds.
-      Not confirmed as the cause; worth checking if it recurs on future rebuilds
-      or independently of them
-- [ ] Periodically spot-check `snapper -c home list` to confirm timeline
-      snapshots are still accumulating hourly
-
-### Dev workflow
-- [ ] Try direnv on a real project: add `.envrc` with `use flake` (or plain env
-      vars), run `direnv allow`, confirm auto-load/unload on `cd`
-- [ ] Add `.envrc` to global gitignore so it's not accidentally committed to
-      shared repos
-
-### System maintenance
-- [ ] Consider `nh` (Nix Helper) for cleaner/more readable rebuild output
-
-### Dotfiles / config organization
-- [ ] Decide where NixOS flake config itself should live relative to dotfiles
-      long-term, so a full reinstall recovers the whole setup, not just data
+### Nice to know
+- [ ] Global git ignore (`.envrc`, `.direnv/`) is managed via
+      `programs.git.ignores` in home-manager, not `git config --global`
+      directly — that file is read-only (symlinked into the Nix store)
+- [ ] home-manager session variables (`hm-session-vars.sh`) have a
+      double-source guard (`__HM_SESS_VARS_SOURCED`) — if a variable seems
+      "not set" despite being correctly built, check for a stale guard in a
+      long-lived shell before assuming the config is broken; a genuinely new
+      terminal process resets it
