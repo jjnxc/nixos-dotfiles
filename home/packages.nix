@@ -32,6 +32,7 @@ with pkgs;
   # swiftpm
 
   # --- Editors / apps ---
+  nh
   neovim
   obsidian
   vscode

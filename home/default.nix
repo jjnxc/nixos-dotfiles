@@ -16,4 +16,8 @@
   home.homeDirectory = "/home/jinx";
   home.stateVersion = "26.05";
   home.packages = import ./packages.nix { inherit pkgs; };
+
+  home.sessionVariables = {
+    NH_FLAKE = "/home/jinx/nixos-dotfiles";
+  };
 }

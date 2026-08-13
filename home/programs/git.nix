@@ -1,7 +1,6 @@
 {
   programs.git = {
     enable = true;
-
     settings = {
       init = {
         defaultBranch = "main";
@@ -11,5 +10,9 @@
         email = "jinx@local.dev";
       };
     };
+    ignores = [
+      ".envrc"
+      ".direnv/"
+    ];
   };
 }
