@@ -7,7 +7,7 @@
       };
       user = {
         name = "jjn";
-        email = "jinx@local.dev";
+        email = "295684389+jjnxc@users.noreply.github.com";
       };
     };
     ignores = [
