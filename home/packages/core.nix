@@ -1,21 +1,6 @@
 { pkgs, ... }:
-
 with pkgs;
 [
-  # --- Wayland / capture / clipboard ---
-  rofi
-  thunar
-  awww
-  grim
-  slurp
-  wl-clipboard
-  dunst
-
-  # --- Media ---
-  ffmpeg
-  playerctl
-  brightnessctl
-
   # --- Core crypto / tooling ---
   openssl
   claude-code
@@ -26,21 +11,12 @@ with pkgs;
   # --- Dev runtime / languages ---
   python3
   unzip
-  qemu
-  virt-manager
   # swift
   # swiftpm
 
-  # --- Editors / apps ---
+  # --- Editors ---
   nh
   neovim
-  obsidian
-  vscode
-  gimp
-  blender
-  geeqie
-  # bambu-studio
-  # prusa-slicer
 
   # --- Build toolchain ---
   gcc
@@ -50,13 +26,6 @@ with pkgs;
   nerd-fonts.jetbrains-mono
   # nerdfonts
 
-  # --- Themes / icons (cosmetic) ---
-  adwaita-icon-theme
-  gnome-themes-extra
-
-  # --- Password manager ---
-  keepassxc
-
   # --- CLI productivity ---
   fzf
   starship
@@ -65,10 +34,6 @@ with pkgs;
   bat
   eza
   file
-
-  # --- File manager / utilities (optional) ---
-  # lf
-  # imv
 
   # --- System monitors (optional) ---
   btop
