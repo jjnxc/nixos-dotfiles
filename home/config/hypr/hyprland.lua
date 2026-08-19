@@ -18,7 +18,8 @@ local browser     = "firefox"
 
 ---- AUTOSTART ----
 hl.on("hyprland.start", function () 
-  hl.exec_cmd("awww-daemon & awww img /home/jinx/Pictures/Wallpapers/drawn.jpg")
+  hl.exec_cmd("awww-daemon > /tmp/awww-daemon.log 2>&1 &")
+  hl.exec_cmd("sleep 1; test -f \"$HOME/Pictures/Wallpapers/drawn.jpg\" && awww img \"$HOME/Pictures/Wallpapers/drawn.jpg\"")
 end)
 
 
@@ -134,9 +135,9 @@ local mainMod = "SUPER"
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind("Print", hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | wl-copy"))
-hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd("grim -g \"$(slurp)\" \"Pictures/Screenshots/$(date +'%s_grim.png')\""))
+hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd("grim -g \"$(slurp)\" \"$HOME/Pictures/Screenshots/$(date +'%s_grim.png')\""))
 
-local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
+hl.bind(mainMod .. " + C", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
