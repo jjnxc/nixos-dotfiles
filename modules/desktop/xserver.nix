@@ -1,13 +1,8 @@
 {
   services.xserver = {
-    enable = true;
+    enable = false;
 
     autoRepeatDelay = 200;
     autoRepeatInterval = 35;
-  };
-
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
   };
 }
