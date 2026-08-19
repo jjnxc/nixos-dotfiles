@@ -13,7 +13,8 @@ with pkgs;
 
   # --- Media ---
   ffmpeg
-  # playerctl
+  playerctl
+  brightnessctl
 
   # --- Core crypto / tooling ---
   openssl
@@ -23,7 +24,6 @@ with pkgs;
   # pinentry
 
   # --- Dev runtime / languages ---
-  docker
   python3
   unzip
   qemu
