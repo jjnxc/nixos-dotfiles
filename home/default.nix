@@ -9,6 +9,7 @@
     ./programs/starship.nix
     ./programs/yazi.nix
     ./programs/dunst.nix
+    ./programs/neovim.nix
     ./desktop/dconf.nix
     ./desktop/portals.nix
     ./desktop/dotfiles.nix
@@ -20,7 +21,4 @@
   home.file."Pictures/Screenshots/.keep".text = "";
   home.file."Pictures/Wallpapers/drawn.jpg".source = ./assets/wallpapers/drawn.jpg;
 
-  home.sessionVariables = {
-    NH_FLAKE = "/home/jinx/nixos-dotfiles";
-  };
 }

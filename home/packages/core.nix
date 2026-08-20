@@ -15,8 +15,6 @@ with pkgs;
   # swiftpm
 
   # --- Editors ---
-  nh
-  neovim
 
   # --- Build toolchain ---
   gcc
@@ -28,7 +26,6 @@ with pkgs;
 
   # --- CLI productivity ---
   fzf
-  starship
   tmux
   ripgrep
   bat
