@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   imports = [
     ./programs/git.nix
@@ -20,5 +20,10 @@
   home.packages = import ./packages { inherit pkgs; };
   home.file."Pictures/Screenshots/.keep".text = "";
   home.file."Pictures/Wallpapers/drawn.jpg".source = ./assets/wallpapers/drawn.jpg;
+
+  catppuccin = {
+    enable = true;
+    flavor = "mocha";
+  };
 
 }

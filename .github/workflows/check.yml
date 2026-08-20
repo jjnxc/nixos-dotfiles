@@ -16,3 +16,7 @@ jobs:
         run: |
           nix flake check --no-build
           nix fmt -- --check .
+      - name: Lint with statix and deadnix
+        run: |
+          nix develop --command statix check .
+          nix develop --command deadnix --fail --exclude hosts/desktop-nvidia/hardware-configuration.nix .
