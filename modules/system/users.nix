@@ -12,6 +12,7 @@
       "wheel"
       "docker"
       "libvirtd"
+      "dialout"
     ];
 
     packages = [ ];
