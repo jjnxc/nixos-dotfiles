@@ -1,9 +1,11 @@
 {
-  virtualisation.docker.enable = true;
-  virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
 
-  virtualisation.libvirtd.qemu = {
-    swtpm.enable = true;
+  virtualisation = {
+    docker.enable = true;
+    libvirtd = {
+      enable = true;
+      qemu.swtpm.enable = true;
+    };
   };
 }

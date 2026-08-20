@@ -5,4 +5,6 @@ with pkgs;
   ngspice
   arduino-ide
   picocom
+  platformio
+  esptool
 ]

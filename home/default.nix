@@ -14,16 +14,18 @@
     ./desktop/portals.nix
     ./desktop/dotfiles.nix
   ];
-  home.username = "jinx";
-  home.homeDirectory = "/home/jinx";
-  home.stateVersion = "26.05";
-  home.packages = import ./packages { inherit pkgs; };
-  home.file."Pictures/Screenshots/.keep".text = "";
-  home.file."Pictures/Wallpapers/drawn.jpg".source = ./assets/wallpapers/drawn.jpg;
+
+  home = {
+    username = "jinx";
+    homeDirectory = "/home/jinx";
+    stateVersion = "26.05";
+    packages = import ./packages { inherit pkgs; };
+    file."Pictures/Screenshots/.keep".text = "";
+    file."Pictures/Wallpapers/drawn.jpg".source = ./assets/wallpapers/drawn.jpg;
+  };
 
   catppuccin = {
     enable = true;
     flavor = "mocha";
   };
-
 }
