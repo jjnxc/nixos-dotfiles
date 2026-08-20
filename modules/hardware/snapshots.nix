@@ -20,9 +20,7 @@
     TIMELINE_LIMIT_YEARLY = 0;
   };
 
-  system.activationScripts.snapperAcl = ''
-    if [ -d /home/.snapshots ]; then
-      ${pkgs.acl}/bin/setfacl -m u:jinx:rwx /home/.snapshots
-    fi
-  '';
+  systemd.tmpfiles.rules = [
+    "a+ /home/.snapshots - - - - u:jinx:rwx"
+  ];
 }
