@@ -4,5 +4,6 @@
     ./display-manager.nix
     ./hyprland.nix
     ./steam.nix
+    ./thunar.nix
   ];
 }

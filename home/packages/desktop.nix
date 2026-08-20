@@ -3,12 +3,12 @@ with pkgs;
 [
   # --- Wayland / capture / clipboard ---
   rofi
-  thunar
   awww
   grim
   slurp
   wl-clipboard
   dunst
+  libnotify
 
   # --- Media ---
   ffmpeg
@@ -16,8 +16,6 @@ with pkgs;
   brightnessctl
 
   # --- Virtualization (GUI) ---
-  qemu
-  virt-manager
 
   # --- Apps ---
   obsidian
