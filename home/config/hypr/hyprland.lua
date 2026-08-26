@@ -18,6 +18,7 @@ local browser     = "firefox"
 
 ---- AUTOSTART ----
 hl.on("hyprland.start", function () 
+  hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE")
   hl.exec_cmd("awww-daemon > /tmp/awww-daemon.log 2>&1 &")
   hl.exec_cmd("sleep 1; test -f \"$HOME/Pictures/Wallpapers/drawn.jpg\" && awww img \"$HOME/Pictures/Wallpapers/drawn.jpg\"")
 end)

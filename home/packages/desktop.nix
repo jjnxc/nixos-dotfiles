@@ -23,7 +23,8 @@ with pkgs;
   gimp
   blender
   geeqie
-  # bambu-studio
+  bambu-studio
+  proton-vpn
   # prusa-slicer
 
   # --- Themes / icons (cosmetic) ---
