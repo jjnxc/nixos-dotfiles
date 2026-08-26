@@ -31,7 +31,7 @@
 
               backupFileExtension = "backup";
 
-              sharedModules = [ catppuccin.homeManagerModules.catppuccin ];
+              sharedModules = [ catppuccin.homeModules.catppuccin ];
             };
           }
         ];
