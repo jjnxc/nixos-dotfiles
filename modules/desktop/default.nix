@@ -5,5 +5,6 @@
     ./hyprland.nix
     ./steam.nix
     ./thunar.nix
+    ./obs.nix
   ];
 }
