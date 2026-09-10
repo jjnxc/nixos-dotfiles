@@ -25,6 +25,7 @@ with pkgs;
   geeqie
   bambu-studio
   proton-vpn
+  godot
   # prusa-slicer
 
   # --- Themes / icons (cosmetic) ---
