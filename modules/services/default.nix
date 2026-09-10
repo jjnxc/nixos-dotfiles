@@ -1,4 +1,8 @@
 {
+  imports = [
+    ./syncthing.nix
+  ];
+
   security.rtkit.enable = true;
 
   services = {
