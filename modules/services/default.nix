@@ -1,6 +1,7 @@
 {
   imports = [
     ./syncthing.nix
+    ./ollama.nix
   ];
 
   security.rtkit.enable = true;
