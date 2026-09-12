@@ -1,0 +1,1 @@
+ignore = ["hosts/desktop-nvidia/hardware-configuration.nix"]

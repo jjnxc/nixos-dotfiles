@@ -31,14 +31,18 @@
     device = "/dev/disk/by-uuid/BD50-1C47";
     fsType = "vfat";
     options = [
-      "fmask=0022"
-      "dmask=0022"
+      "fmask=0077"
+      "dmask=0077"
     ];
   };
   fileSystems."/home" = {
     device = "/dev/disk/by-uuid/1fbf1d82-8a56-4454-83b8-4e52ee69af36";
     fsType = "btrfs";
-    options = [ "subvol=@home" "compress=zstd" "noatime" ];
+    options = [
+      "subvol=@home"
+      "compress=zstd"
+      "noatime"
+    ];
   };
   swapDevices = [ ];
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

@@ -1,5 +1,3 @@
-{ ... }:
-
 {
   services.syncthing = {
     enable = true;
@@ -11,5 +9,10 @@
     configDir = "/home/jinx/.config/syncthing";
 
     openDefaultPorts = true;
+
+    # Devices and folders are managed in the web UI. With the defaults (true),
+    # adding any `settings` here would make the module delete them on restart.
+    overrideDevices = false;
+    overrideFolders = false;
   };
 }

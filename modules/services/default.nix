@@ -2,6 +2,7 @@
   imports = [
     ./syncthing.nix
     ./ollama.nix
+    ./herdr.nix
   ];
 
   security.rtkit.enable = true;

@@ -11,7 +11,9 @@ if the main drive is the thing that's dead, you can't read this off it.
 Most common, least scary. NixOS keeps old generations; you're never stuck with a bad one.
 1. Reboot.
 2. At the boot menu (systemd-boot), you'll see a list of generations — pick the one
-   **before** your last change.
+   **before** your last change. (You can't edit kernel parameters from this menu —
+   `editor` is disabled, see the boot menu note below — but picking a different
+   generation still works fine.)
 3. System boots into the working generation. Nothing about `/home` or your data changes.
 4. Once booted, fix the config, commit, and `update` again — or just roll back
    permanently:
@@ -22,7 +24,11 @@ Most common, least scary. NixOS keeps old generations; you're never stuck with a
 ## Scenario 2: System won't boot at all
 1. At the boot menu, try booting an **older generation** first (same as Scenario 1,
    just done blind before you can log in). This fixes most cases.
-2. If no generation boots, boot from a **NixOS live USB**.
+2. If no generation boots, boot from a **NixOS live USB**. Note: the systemd-boot
+   menu's kernel-parameter editor is disabled (`editor = false` in
+   `modules/system/boot.nix` — it used to allow `init=/bin/sh`, i.e. a passwordless
+   root shell), so there's no single-user/rescue-mode trick from the menu itself.
+   The live USB is the way in for anything beyond picking a generation.
 3. Mount your drives (adjust UUIDs if the layout changed — check with `lsblk -f`
    from the live USB):
 ```bash
@@ -83,7 +89,11 @@ dotfiles repo working copy — all safe. What you're rebuilding is just the OS.
       /mnt/home/jinx/nixos-dotfiles/hosts/desktop-nvidia/hardware-configuration.nix
 ```
    Then edit that copied file and **manually re-add your `/home` fileSystems
-   block** (UUID may differ if it's a new physical drive — check with `blkid`).
+   block** (UUID may differ if it's a new physical drive — check with `blkid`),
+   and check the generated `/boot` fileSystems block still has
+   `fmask=0077,dmask=0077` in its options — `nixos-generate-config` may default
+   to `0022`, which leaves the systemd-boot random seed world-readable. Tighten
+   it back to `0077` if so.
 7. Install using your flake:
 ```bash
    nixos-install --flake /mnt/home/jinx/nixos-dotfiles#desktop-nvidia
@@ -137,24 +147,24 @@ baseline snapshot (`0`). No obvious error unless you go looking.
 **Cause:** Configuring `services.snapper.configs.home` declaratively in NixOS
 creates the config file, but does NOT correctly set up permissions on the
 `.snapshots` subvolume that snapper actually writes into. The systemd timer
-runs as root and needs `.snapshots` owned by `root:root` — but your user also
-needs write access to browse/manage snapshots without `sudo`, which normal
-Unix ownership can't do for two different accounts at once. This needs a
-POSIX ACL, not a chown, and the declarative module doesn't set one for you.
+runs as root and needs `.snapshots` owned by `root:root`, which normal Unix
+ownership won't give your user any access to at all. This needs a POSIX ACL,
+not a chown, and the declarative module doesn't set one for you. Your user
+only needs read/traverse (`r-x`) to browse snapshots — actual snapper
+operations (`list`, `undochange`, `delete`) run through `snapperd` as root via
+`ALLOW_USERS`, so no write access is needed or granted.
 **How to check if this is happening to you:**
 ```bash
 journalctl -u snapper-timeline.service --no-pager | tail -20
 ```
 Look for `IO Error (.snapshots must have owner root)` or
 `IO Error (open failed path:/home/.snapshots errno:2 ...)`.
-**The fix** (already applied in this repo's `modules/hardware/snapshots.nix`
-as of the commit "Persist snapper .snapshots ACL fix via activation script"):
+**The fix** (applied in this repo's `modules/hardware/snapshots.nix`, via a
+`tmpfiles` rule rather than an activation script):
 ```nix
-system.activationScripts.snapperAcl = ''
-  if [ -d /home/.snapshots ]; then
-    ${pkgs.acl}/bin/setfacl -m u:jinx:rwx /home/.snapshots
-  fi
-'';
+systemd.tmpfiles.rules = [
+  "a+ /home/.snapshots - - - - u:jinx:r-x"
+];
 ```
 This re-applies the correct ACL on every rebuild/boot, so it's self-healing.
 **If setting this up fresh on a new install:** the subvolume needs to exist
@@ -162,9 +172,9 @@ before the ACL can be applied. If `/home/.snapshots` doesn't exist yet:
 ```bash
 sudo btrfs subvolume create /home/.snapshots
 sudo chmod 750 /home/.snapshots
-sudo setfacl -m u:jinx:rwx /home/.snapshots
+sudo setfacl -m u:jinx:rx /home/.snapshots
 ```
-Then rebuild — the activation script takes over from there on every boot after.
+Then rebuild — the tmpfiles rule takes over from there on every boot after.
 **Lesson:** a systemd timer showing "active" doesn't mean the thing it's
 supposed to do is actually succeeding. Worth an occasional `snapper -c home
 list` spot-check rather than trusting the timer status alone.

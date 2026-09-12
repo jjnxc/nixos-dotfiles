@@ -1,7 +1,4 @@
-{ pkgs, ... }:
 {
-  environment.systemPackages = with pkgs; [ btrfs-progs snapper ];
-
   services.btrfs.autoScrub = {
     enable = true;
     interval = "monthly";
@@ -20,7 +17,8 @@
     TIMELINE_LIMIT_YEARLY = 0;
   };
 
+  # r-x only: snapper operations run as root through snapperd (ALLOW_USERS).
   systemd.tmpfiles.rules = [
-    "a+ /home/.snapshots - - - - u:jinx:rwx"
+    "a+ /home/.snapshots - - - - u:jinx:r-x"
   ];
 }

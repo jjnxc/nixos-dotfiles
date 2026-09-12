@@ -1,8 +1,3 @@
 {
-  services.xserver = {
-    enable = false;
-
-    autoRepeatDelay = 200;
-    autoRepeatInterval = 35;
-  };
+  services.xserver.enable = false;
 }

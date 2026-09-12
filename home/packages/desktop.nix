@@ -7,7 +7,6 @@ with pkgs;
   grim
   slurp
   wl-clipboard
-  dunst
   libnotify
 
   # --- Media ---

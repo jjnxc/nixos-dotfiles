@@ -4,7 +4,6 @@ with pkgs;
   # --- Core crypto / tooling ---
   openssl
   claude-code
-  ollama
   # gnupg
   # pinentry
 

@@ -1,4 +1,5 @@
 {
+  # Still required with X disabled: this is what selects the NVIDIA driver.
   services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
@@ -8,7 +9,6 @@
   };
 
   environment.sessionVariables = {
-    WLR_NO_HARDWARE_CURSORS = "1";
     LIBVA_DRIVER_NAME = "nvidia";
   };
 }

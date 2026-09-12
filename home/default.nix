@@ -10,6 +10,7 @@
     ./programs/yazi.nix
     ./programs/dunst.nix
     ./programs/neovim.nix
+    ./programs/opencode.nix
     ./desktop/dconf.nix
     ./desktop/portals.nix
     ./desktop/dotfiles.nix
